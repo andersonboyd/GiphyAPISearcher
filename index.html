@@ -6,11 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>GIPHY Search</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-    <div class="container">
+    <header>
         <div id="button-view"></div>
+    </header>
+    <div class="container">
         <div id="form-box">
             <form id="search-form">
                 <label for="searcher">Search GIFs</label>
@@ -22,14 +25,13 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var topics = ["angry", "confused", "do not want"];
+        var topics = ["angry", "confused", "do not want", "ugh", "lol", "omg", "oh no", "oh yeah", "yikes", "love you"];
         var limit;
         var button;
         var search;
-        var gifClass;
 
         function searchGif(search) {
-            limit = 5;
+            limit = 10;
             var apiKey = "BSbV64hnIQZ1MJpga9AyT5k5195mKTi3";
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&limit=" + limit + "&api_key=" + apiKey;
             $.ajax({
@@ -38,8 +40,8 @@
             }).then(function (response) {
                 for(var j=0; j < limit; j++){
                     console.log(response.data[j].images.fixed_width.url);
-                    var still = $("<div>").html("<img src="+response.data[j].images.fixed_width.url+"/>");
-                    $("#gif-container").append(still);
+                    var gif = $("<div>").html("<img src="+response.data[j].images.fixed_width.url+"/><br><p>Rating: "+response.data[j].rating);
+                    $("#gif-container").append(gif);
                 }
             });
         }
@@ -49,8 +51,6 @@
             for (var i = 0; i < topics.length; i++) {
                 button = $("<button>").text(topics[i]);
                 button.attr("value", topics[i]);
-                // gifClass = topics[i].toLowerCase().split(" ").join("");
-                // button.addClass(gifClass);
                 $("#button-view").append(button);
             }
             $("button").on("click", function () {

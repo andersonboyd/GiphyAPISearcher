@@ -1,0 +1,26 @@
+button, input, form, label, p {
+    margin: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.25rem;
+}
+
+button, #add-gif {
+    border-radius: 0.25rem;
+    background-color: darkcyan;
+    color: white;
+}
+
+body {
+    background-color: gainsboro;
+}
+
+#search-form {
+    float: right;
+    clear: both;
+    background-color: gray;
+}
+
+#gif-container div{
+    display: inline-block;
+    margin: 10px;
+}
