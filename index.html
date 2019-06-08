@@ -31,7 +31,7 @@
         var search;
 
         function searchGif(search) {
-            limit = 10;
+            limit = 12;
             var apiKey = "BSbV64hnIQZ1MJpga9AyT5k5195mKTi3";
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&limit=" + limit + "&api_key=" + apiKey;
             $.ajax({
@@ -40,7 +40,7 @@
             }).then(function (response) {
                 for(var j=0; j < limit; j++){
                     console.log(response.data[j].images.fixed_width.url);
-                    var gif = $("<div>").html("<img src="+response.data[j].images.fixed_width.url+"/><br><p>Rating: "+response.data[j].rating);
+                    var gif = $("<div>").html("<img src="+response.data[j].images.fixed_width.url+"/><br><p>Rating: "+response.data[j].rating.toUpperCase());
                     $("#gif-container").append(gif);
                 }
             });
