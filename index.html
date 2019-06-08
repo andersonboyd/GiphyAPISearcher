@@ -29,7 +29,7 @@
         var gifClass;
 
         function searchGif(search) {
-            limit = 1;
+            limit = 5;
             var apiKey = "BSbV64hnIQZ1MJpga9AyT5k5195mKTi3";
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&limit=" + limit + "&api_key=" + apiKey;
             $.ajax({
@@ -37,8 +37,8 @@
                 method: "GET"
             }).then(function (response) {
                 for(var j=0; j <= limit; j++){
-                    console.log(response.data[j].images.original_still.url);
-                    var still = $("<div>").html("<img src="+response.data[j].images.fixed_width_still.url+"/>");
+                    console.log(response.data[j].images.fixed_width.url);
+                    var still = $("<div>").html("<img src="+response.data[j].images.fixed_width.url+"/>");
                     $("#gif-container").append(still);
                 }
             });
