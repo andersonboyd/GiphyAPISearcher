@@ -36,7 +36,7 @@
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
-                for(var j=0; j <= limit; j++){
+                for(var j=0; j < limit; j++){
                     console.log(response.data[j].images.fixed_width.url);
                     var still = $("<div>").html("<img src="+response.data[j].images.fixed_width.url+"/>");
                     $("#gif-container").append(still);
