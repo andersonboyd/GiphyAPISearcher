@@ -38,11 +38,24 @@
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
+                var gif;
+                var still;
+                var rating;
                 for(var j=0; j < limit; j++){
-                    console.log(response.data[j].images.fixed_width.url);
-                    var gif = $("<div>").html("<img src="+response.data[j].images.fixed_width.url+"/><br><p>Rating: "+response.data[j].rating.toUpperCase());
-                    $("#gif-container").append(gif);
+                    console.log(response.data[j].images);
+                    // gif = $("<div>").html("<img src="+response.data[j].images.fixed_width.url+"/>");
+                    // gif.addClass ("gif");
+                    still = $("<div>").html("<img src="+response.data[j].images.fixed_width_still.url+"/>");
+                    rating = $("<p>").text("Rating: "+response.data[j].rating.toUpperCase());
+                    still.append(rating);
+                    // still.addClass("gifStill");
+                    $("#gif-container").append(still);
                 }
+                // $(".gifStill").click(function(){
+                //     console.log(this);
+                //     this.remove(still);
+                //     this.append(gif);
+                // });
             });
         }
         $("add-gif").on("click", renderButtons)

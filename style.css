@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: gainsboro;
     font-family: Arial, Helvetica, sans-serif;
@@ -10,6 +14,7 @@ button, input, form, label {
 
 p {
     font-size: 1rem;
+    display: block;
 }
 
 button, #add-gif {
@@ -23,14 +28,18 @@ button, #add-gif {
 }
 
 #search-form {
+    height: 200px;
     float: right;
     clear: both;
     background-color: gray;
-    margin-bottom: 50%;
+    margin-bottom: 10%;
 }
 
-#gif-container div{
-    display: inline-block;
+#gif-container {
+    height: 300px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
     margin: 10px;
     padding: 5px;
 }
