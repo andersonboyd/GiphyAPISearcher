@@ -31,31 +31,46 @@
         var search;
 
         function searchGif(search) {
-            limit = 12;
+            limit = 10;
+            var gif;
+            var still;
             var apiKey = "BSbV64hnIQZ1MJpga9AyT5k5195mKTi3";
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&limit=" + limit + "&api_key=" + apiKey;
             $.ajax({
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
-                var gif;
-                var still;
-                var rating;
-                for(var j=0; j < limit; j++){
-                    console.log(response.data[j].images);
-                    // gif = $("<div>").html("<img src="+response.data[j].images.fixed_width.url+"/>");
-                    // gif.addClass ("gif");
-                    still = $("<div>").html("<img src="+response.data[j].images.fixed_width_still.url+"/>");
-                    rating = $("<p>").text("Rating: "+response.data[j].rating.toUpperCase());
-                    still.append(rating);
-                    // still.addClass("gifStill");
-                    $("#gif-container").append(still);
+                var results = response.data;
+                for (var j = 0; j < limit; j++) {
+                    gif = results[j].images.fixed_width.url;
+                    still = results[j].images.fixed_width_still.url;
+                    var rating = results[j].rating;
+                    var gifBox = $("<div>");
+                    var gifImage = $("<img data-still data-animate data-state>");
+                    var ratingGraf = $("<p>");
+                    gifImage.attr("src", still);
+                    gifImage.attr("data-still", still);
+                    gifImage.attr("data-animate", gif);
+                    gifImage.attr("data-state", "still");
+                    gifImage.addClass("gif");
+                    ratingGraf.append("Rating: " + rating);
+                    gifBox.prepend(gifImage, ratingGraf);
+                    $("#gif-container").prepend(gifBox);
                 }
-                // $(".gifStill").click(function(){
-                //     console.log(this);
-                //     this.remove(still);
-                //     this.append(gif);
-                // });
+                $(".gif").on("click", function () {
+                    console.log($(this));
+                    var state = $(this).attr("data-state");
+                    var move = $(this).attr("data-animate");
+                    var stay = $(this).attr("data-still");
+                    console.log(state, move, stay);
+                    if(state === "still"){
+                        $(this).attr("data-state", "moving");
+                        $(this).attr("src", move);
+                    }else{
+                        $(this).attr("data-state", "still");
+                        $(this).attr("src", stay);
+                    }
+                })
             });
         }
         $("add-gif").on("click", renderButtons)
@@ -72,7 +87,7 @@
                 searchGif(search);
             });
         }
-        $("#add-gif").on("click", function(event) {
+        $("#add-gif").on("click", function (event) {
             event.preventDefault();
             search = $("#searcher").val();
             topics.push(search);
