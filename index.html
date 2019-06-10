@@ -18,6 +18,8 @@
             <form id="search-form">
                 <label for="searcher">Search GIFs</label>
                 <input type="text" id="searcher"><br>
+                <label for="limit">How many?</label>
+                <input type="number" id="limit"><br><hr>
                 <input type="submit" id="add-gif" value="Search GIFs">
             </form>
         </div>
@@ -31,7 +33,10 @@
         var search;
 
         function searchGif(search) {
-            limit = 10;
+            limit = $("#limit").val().trim();
+            if(!$("#limit").val().trim()){
+                limit = 10;
+            }
             var gif;
             var still;
             var apiKey = "BSbV64hnIQZ1MJpga9AyT5k5195mKTi3";
@@ -53,16 +58,16 @@
                     gifImage.attr("data-animate", gif);
                     gifImage.attr("data-state", "still");
                     gifImage.addClass("gif");
-                    ratingGraf.append("Rating: " + rating);
+                    ratingGraf.append("Rating: " + rating.toUpperCase());
                     gifBox.prepend(gifImage, ratingGraf);
                     $("#gif-container").prepend(gifBox);
                 }
                 $(".gif").on("click", function () {
-                    console.log($(this));
+                    // console.log($(this));
                     var state = $(this).attr("data-state");
                     var move = $(this).attr("data-animate");
                     var stay = $(this).attr("data-still");
-                    console.log(state, move, stay);
+                    // console.log(state, move, stay);
                     if(state === "still"){
                         $(this).attr("data-state", "moving");
                         $(this).attr("src", move);
@@ -73,7 +78,11 @@
                 })
             });
         }
-        $("add-gif").on("click", renderButtons)
+        $("add-gif").on("click", function(){
+            if($("#searcher").val()){
+                renderButtons();
+            }
+        })
         function renderButtons() {
             $("#button-view").empty();
             for (var i = 0; i < topics.length; i++) {
@@ -88,12 +97,14 @@
             });
         }
         $("#add-gif").on("click", function (event) {
-            event.preventDefault();
-            search = $("#searcher").val();
-            topics.push(search);
-            $("#gif-container").empty();
-            renderButtons();
-            searchGif(search);
+            if($("#searcher").val()){
+                event.preventDefault();
+                search = $("#searcher").val().trim();
+                topics.push(search);
+                $("#gif-container").empty();
+                renderButtons();
+                searchGif(search);
+            }
         });
         renderButtons();
     </script>

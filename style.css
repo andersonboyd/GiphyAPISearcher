@@ -28,7 +28,8 @@ button, #add-gif {
 }
 
 #search-form {
-    height: 200px;
+    height: 17.5%;
+    padding: 1.5%;
     float: right;
     clear: both;
     background-color: gray;
@@ -36,7 +37,7 @@ button, #add-gif {
 }
 
 #gif-container {
-    height: 300px;
+    height: 50%;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
